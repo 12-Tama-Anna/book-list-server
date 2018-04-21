@@ -12,6 +12,8 @@ const app = express();
 const PORT = process.env.PORT;
 const CLIENT_URL = process.env.CLIENT_URL;
 
+app.use(express.urlencoded({extended:true}));
+
 // Database Setup
 const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
