@@ -12,6 +12,8 @@ const app = express();
 const PORT = process.env.PORT;
 const CLIENT_URL = process.env.CLIENT_URL;
 
+app.use(express.urlencoded({extended:true}));
+
 // Database Setup
 const client = new pg.Client(process.env.DATABASE_URL);
 client.connect();
@@ -41,23 +43,12 @@ app.get('/api/v1/books/:id', (req, res) => {
     .catch(console.error);
 })
 
-// app.put('/api/v1/books/:id', (req, res) => {
-//   client.query(
-//     `UPDATE books
-//     SET title=$1, author=$2, isbn=$3, image_url=$4, desciption=$5 
-//     WHERE book_id=$6`,
-//     [
-//       req.body.title,
-//       req.body.author,
-//       req.body.isbn,
-//       req.body.image_url,
-//       req.body.description,
-//       req.params.id
-//     ])
-//     .then(() => res.send('OK'))
-//     .catch(console.error);
-// });
 
+app.post('/api/v1/books', (req, res) => {
+  client.query(`
+    INSERT INTO books (author, title, isbn, image_url, description) VALUES ('${req.body.author}', '${req.body.title}', '${req.body.isbn}', '${req.body.image_url}', '${req.body.description}');
+  `).then(results => res.send(results.rows)).then(console.log('post'));
+})
 
 
 
