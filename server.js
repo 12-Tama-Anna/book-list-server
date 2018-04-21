@@ -20,7 +20,7 @@ client.connect();
 client.on('error', err => console.error(err));
 
 // Application Middleware
-app.use(cors());
+app.use(cors({origin: '*'}));
 
 // API Endpoints
 app.get('/api/v1/books', (req, res) => {
