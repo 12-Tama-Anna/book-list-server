@@ -42,9 +42,10 @@ app.get('/api/v1/books/:id', (req, res) => {
 
 
 app.post('/api/v1/books', (req, res) => {
+  console.log('im postiongggg')
   client.query(`
-    INSERT INTO books (title, author, isbn, image_url, description) VALUES ($1, $2, $3, $4, $5)
-  `[
+    INSERT INTO books (title, author, isbn, image_url, description) VALUES ($1, $2, $3, $4, $5);
+  `,[
       req.body.title,
       req.body.author,
       req.body.isbn,
@@ -52,8 +53,11 @@ app.post('/api/v1/books', (req, res) => {
       req.body.description
     ])
     .then(results => res.send(results.rows))
+    .then(console.log('post'))
     .catch(console.error);
 })
+
+
 
 
 app.get('*', (req, res) => res.redirect(CLIENT_URL));
